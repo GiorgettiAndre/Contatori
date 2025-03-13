@@ -19,8 +19,8 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity
 {
+    //testo dello storico
     TextView Storico;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -34,11 +34,14 @@ public class MainActivity extends AppCompatActivity
             return insets;
         });
 
+        //prendo lo storico
         Storico = (TextView) findViewById(R.id.Storico);
     }
 
+    //funzione di incremento
     public void Incrementa(View view)
     {
+        //prendo il nome del bottone per capire che attività è (1 = Lavoro, 2 = Sport, 3 = Acqua)
         int b =  Character.getNumericValue(getResources().getResourceEntryName(view.getId()).charAt(3));
         TextView count = null;
         switch (b)
@@ -47,7 +50,7 @@ public class MainActivity extends AppCompatActivity
             case 2: count = (TextView) findViewById(R.id.Sport); break;
             case 3: count = (TextView) findViewById(R.id.Acqua); break;
         }
-
+        //faccio l'incremento e aggiorno lo storico
         if(count != null)
         {
             int i = Integer.parseInt(count.getText().toString());
@@ -59,6 +62,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    //funzione di decremento
     public void Decrementa(View view)
     {
         int b =  Character.getNumericValue(getResources().getResourceEntryName(view.getId()).charAt(3));
@@ -109,6 +113,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    //funzione che stampa nella textview lo storico in base al nome dell'attività, al valore prima della modifica e al valore dopo
     private void StampaStorico(String n, int v1, int v2)
     {
         // Ottieni la data e ora corrente
