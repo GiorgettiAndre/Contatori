@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity
 
     public void Incrementa(View view)
     {
-        int b =  Character.getNumericValue(view.getTransitionName().charAt(3));
+        int b =  Character.getNumericValue(getResources().getResourceEntryName(view.getId()).charAt(3));
         TextView count = null;
         switch (b)
         {
@@ -50,23 +50,18 @@ public class MainActivity extends AppCompatActivity
 
         if(count != null)
         {
-            try
-            {
-                int i = Integer.parseInt(count.getText().toString());
+            int i = Integer.parseInt(count.getText().toString());
 
-                StampaStorico(count.getTransitionName(), i , i+1);
-                i++;
+            StampaStorico(getResources().getResourceEntryName(count.getId()), i , i+1);
+            i++;
 
-                count.setText(String.valueOf(i));
-            } catch (NumberFormatException e) {
-                System.out.println("Errore: la stringa non è un numero valido, sono in incrementa dal bottone " + view.getTransitionName());
-            }
+            count.setText(String.valueOf(i));
         }
     }
 
     public void Decrementa(View view)
     {
-        int b =  Character.getNumericValue(view.getTransitionName().charAt(3));
+        int b =  Character.getNumericValue(getResources().getResourceEntryName(view.getId()).charAt(3));
         TextView count = null;
         switch (b)
         {
@@ -77,26 +72,21 @@ public class MainActivity extends AppCompatActivity
 
         if(count != null)
         {
-            try
+            int i = Integer.parseInt(count.getText().toString());
+
+            if(i > 0)
             {
-                int i = Integer.parseInt(count.getText().toString());
-
-                if(i > 0)
-                {
-                    StampaStorico(count.getTransitionName(), i , i-1);
-                    i--;
-                }
-
-                count.setText(String.valueOf(i));
-            } catch (NumberFormatException e) {
-                System.out.println("Errore: la stringa non è un numero valido, sono in incrementa dal bottone " + view.getTransitionName());
+                StampaStorico(getResources().getResourceEntryName(count.getId()), i , i-1);
+                i--;
             }
+
+            count.setText(String.valueOf(i));
         }
     }
 
     public void Resetta(View view)
     {
-        int b =  Character.getNumericValue(view.getTransitionName().charAt(3));
+        int b =  Character.getNumericValue(getResources().getResourceEntryName(view.getId()).charAt(3));
         TextView count = null;
         switch (b)
         {
@@ -107,17 +97,15 @@ public class MainActivity extends AppCompatActivity
 
         if(count != null)
         {
-            try
+            int i = Integer.parseInt(count.getText().toString());
+
+            if(i != 0)
             {
-                int i = Integer.parseInt(count.getText().toString());
-
-                StampaStorico(count.getTransitionName(), i , 0);
+                StampaStorico(getResources().getResourceEntryName(count.getId()), i , 0);
                 i = 0;
-
-                count.setText(String.valueOf(i));
-            } catch (NumberFormatException e) {
-                System.out.println("Errore: la stringa non è un numero valido, sono in incrementa dal bottone " + view.getTransitionName());
             }
+
+            count.setText(String.valueOf(i));
         }
     }
 
@@ -125,11 +113,13 @@ public class MainActivity extends AppCompatActivity
     {
         // Ottieni la data e ora corrente
         Calendar calendar = Calendar.getInstance();
+        // Incrementa l'ora di 1
+        calendar.add(Calendar.HOUR_OF_DAY, 1);
         // Definisci un formato
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
         // Converte la data in stringa formattata
         String formattedDate = sdf.format(calendar.getTime());
 
-        Storico.append("["+formattedDate+"]: contatore "+n+" da "+String.valueOf(v1)+" a "+String.valueOf(v2)+".");
+        Storico.append("["+formattedDate+"]: contatore "+n+" da "+String.valueOf(v1)+" a "+String.valueOf(v2)+".\n");
     }
 }
